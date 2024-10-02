@@ -1,0 +1,26 @@
+
+.headArea{
+    height: 40vh;
+    text-align: center;
+}
+
+.imageArea {
+    height: 50%;
+    object-fit: cover;
+}
+
+.spinner {
+    border: 16px solid #f3f3f3; /* 스피너 외곽 */
+    border-top: 16px solid #3498db; /* 스피너의 색상 */
+    border-radius: 50%; /* 원형으로 만듭니다 */
+    height: 5vh;
+    animation: spin 2s linear infinite; /* 애니메이션 효과 */
+  }
+
+.result {
+    text-align: center;
+}
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
