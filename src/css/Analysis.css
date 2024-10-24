@@ -1,25 +1,23 @@
-
-.headArea{
-    height: 40vh;
-    text-align: center;
-}
-
-.imageArea {
-    height: 50%;
-    object-fit: cover;
+.fileUploadBtn:hover {
+    background-color: #8D93A0 !important;
 }
 
 .spinner {
-    border: 16px solid #f3f3f3; /* 스피너 외곽 */
-    border-top: 16px solid #3498db; /* 스피너의 색상 */
-    border-radius: 50%; /* 원형으로 만듭니다 */
-    height: 5vh;
     animation: spin 2s linear infinite; /* 애니메이션 효과 */
   }
 
-.result {
-    text-align: center;
+.rs-input-group {
+  border: none !important; /* 테두리 제거 */
+  box-shadow: none !important; /* 그림자 제거 */
 }
+
+/* DatePicker가 포커스될 때의 스타일도 제거 */
+.rs-input-group-focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 @keyframes spin {
 0% { transform: rotate(0deg); }
 100% { transform: rotate(360deg); }
