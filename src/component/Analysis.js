@@ -68,7 +68,6 @@ const Analysis = () => {
         let holder;
 
         if (days[0] === days[1]) {
-            console.log(days[0]);
             holder = convertDay(days[0])
 
         } else {
@@ -100,7 +99,6 @@ const Analysis = () => {
     }
 
     const StartAnalysis = async() => {
-        
         try{
             setOnProcess(true);
             setResults({}); // 재 분석 시 결과 초기화
@@ -108,6 +106,9 @@ const Analysis = () => {
             if (file){
                 const formData = new FormData();
                 file && formData.append("file", file);
+                formData.append("standard", JSON.stringify(standardDates));
+                formData.append("compare", JSON.stringify(compareDates));
+
                 const response = await axios.post('http://127.0.0.1:8000/analysis/report', formData);
                 setResults((prevResults) => ({...prevResults, ...response.data}));
             };
@@ -115,6 +116,9 @@ const Analysis = () => {
             if (keywordFile){
                 const keywordFormData = new FormData();
                 keywordFile && keywordFormData.append("file", keywordFile);
+                keywordFormData.append("standard", JSON.stringify(standardDates));
+                keywordFormData.append("compare", JSON.stringify(compareDates));
+
                 const keywordResponse = await axios.post('http://127.0.0.1:8000/analysis/keyword', keywordFormData);
                 
                 setResults((prevResults) => ({...prevResults, ...keywordResponse.data}));
@@ -124,8 +128,9 @@ const Analysis = () => {
             setMenu(sampleKey);
 
             setOnProcess(false);
-
+            
         } catch (e) {
+            setOnProcess(false);
             console.log(e);
         }
     };
