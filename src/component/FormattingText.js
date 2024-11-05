@@ -35,14 +35,16 @@ const FormattingText = ({ allResult, menu, onProcess }) => {
 
     if (result){
         return (
-            <>
-                {result.split('\n').map((line, index) => (
+            <>  
+                <iframe srcDoc={result} 
+                    style={{height: "100%", width: "100%", padding: "0", border: "none"}}/> 
+                {/* {result.split('\n').map((line, index) => (
                     line === "" || line.includes("-") ? (
                         <p key={index} style={{fontSize: "14px"}}> {line} </p>
                         ) : (
                         <p key={index} style={{fontWeight: "bold"}}> ● {line} </p>
                         )
-                    ))}
+                    ))} */}
             </>
         )
     };

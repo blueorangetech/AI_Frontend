@@ -273,7 +273,7 @@ const Analysis = () => {
                     </Container>
 
                     <Container style={{marginBottom: "30px", marginRight: "30px", marginLeft: "30px", padding: "30px",
-                        overflow: "auto", backgroundColor: "white",  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)", flexGrow: 1, maxHeight: "65vh", maxWidth: "80vw"}}>
+                        backgroundColor: "white",  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)", flexGrow: 1, maxHeight: "65vh", maxWidth: "80vw"}}>
 
 
                         <FormattingText allResult={results} menu={menu} onProcess={onProcess}/>
