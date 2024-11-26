@@ -18,6 +18,8 @@ import CostIamge from "../images/icon_04.png";
 import ClickImage from "../images/icon_05.png";
 import ImpImage from "../images/icon_06.png";
 
+const endPoint = process.env.REACT_APP_ENDPOINT;
+
 const Analysis = () => {
     const [file, setfile] = useState(null);
     const [keywordFile, setKeywordFile] = useState(null);
