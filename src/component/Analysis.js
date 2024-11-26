@@ -121,7 +121,7 @@ const Analysis = () => {
                 keywordFormData.append("standard", JSON.stringify(standardDates));
                 keywordFormData.append("compare", JSON.stringify(compareDates));
 
-                const keywordResponse = await axios.post('http://127.0.0.1:8000/analysis/keyword', keywordFormData);
+                const keywordResponse = await axios.post(`${endPoint}/analysis/keyword`, keywordFormData);
                 
                 setResults((prevResults) => ({...prevResults, ...keywordResponse.data}));
             };
