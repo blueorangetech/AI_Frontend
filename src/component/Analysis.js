@@ -111,7 +111,7 @@ const Analysis = () => {
                 formData.append("standard", JSON.stringify(standardDates));
                 formData.append("compare", JSON.stringify(compareDates));
 
-                const response = await axios.post('http://127.0.0.1:8000/analysis/report', formData);
+                const response = await axios.post(`${endPoint}/analysis/report`, formData);
                 setResults((prevResults) => ({...prevResults, ...response.data}));
             };
 
