@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Image, Container } from "react-bootstrap";
 
-import MainImage from "../images/p_main.png";
+import MainImage from '../images/p_main.png'
 import RoadingImage from '../images/p_loading.png';
 import NoResult from "../images/p_error.png";
 
