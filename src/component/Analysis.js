@@ -1,5 +1,5 @@
 import { Container, Button, Image, ListGroup } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import FormattingText from "./FormattingText";
 
@@ -44,6 +44,13 @@ const Analysis = () => {
     const [compareDates, setCompareDates] = useState([sevenDaysAgo, sevenDaysAgo]);
 
     const [onProcess, setOnProcess] = useState(false);
+
+    useEffect(() => {
+        if (results && Object.keys(results).length > 0) {
+            const sampleKey = Object.keys(results)[0];
+            setMenu(sampleKey);
+        }
+    }, [results]);
 
     const setFile = (e) => {
         setfile(e.target.files[0]);
@@ -126,13 +133,11 @@ const Analysis = () => {
                 setResults((prevResults) => ({...prevResults, ...keywordResponse.data}));
             };
 
-            const sampleKey = Object.keys(results)[0];
-            setMenu(sampleKey);
-
             setOnProcess(false);
             
         } catch (e) {
             setOnProcess(false);
+            alert(e.response.detail);
             console.log(e);
         }
     };
