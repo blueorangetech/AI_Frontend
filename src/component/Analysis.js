@@ -16,7 +16,7 @@ import WebLogo from "../images/web_logo.png";
 
 const Analysis = ({keywordMenuList}) => {
 
-    const [menu, setMenu] = useState('컨텍 현황');
+    const [menu, setMenu] = useState('컨택 현황');
     
     const selectMenu = (e) => {
       setMenu(e);
@@ -97,7 +97,7 @@ const Analysis = ({keywordMenuList}) => {
 
                         </div>
                          <ListGroup>
-                            { ["컨텍 현황", "성과 대시보드"].map((item, index) => {
+                            { ["컨택 현황", "성과 대시보드"].map((item, index) => {
                                 return (
                                     <ListGroup.Item key={index} onClick={() => selectMenu(item)} 
                                         style={menu === item ? selecetedStyle : notSelecetedStyle}>
@@ -113,7 +113,7 @@ const Analysis = ({keywordMenuList}) => {
 
                 </div>
                 {
-                  menu === '컨텍 현황' ? <TableView/> : menu === '성과 대시보드' ? <DashBoard/> : <Reports menu={menu} setMenu={setMenu}/>
+                  menu === '컨택 현황' ? <TableView/> : menu === '성과 대시보드' ? <DashBoard/> : <Reports menu={menu} setMenu={setMenu}/>
                 }
                 
             </div>
