@@ -30,7 +30,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/carrot' element={<Analysis keywordMenuList={lina}/>}/>
-        <Route path='/kbinsurance' element={<Analysis keywordMenuList={kbinsurance}/>}/>
+        <Route path='/' element={<Analysis keywordMenuList={kbinsurance}/>}/>
       </Routes>
     </BrowserRouter>
   );

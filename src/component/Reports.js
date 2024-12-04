@@ -126,7 +126,6 @@ const Reports = ({menu, setMenu}) => {
     } catch (e) {
       setOnProcess(false);
       alert(e.response.detail);
-      console.log(e);
     }
   };
 

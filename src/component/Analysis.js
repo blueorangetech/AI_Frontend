@@ -43,13 +43,13 @@ const Analysis = ({keywordMenuList}) => {
         <div className="mainArea" style={{display : "flex", flexDirection: "column", height: "100vh"}}>
 
             <div className="logoArea" style={{display: "flex", alignItems:"center", backgroundColor: "#5986ED", height: "7%"}}>
-                <Image src={WebLogo} style={{marginLeft: "30px"}}/> 
+                <Image src={WebLogo} style={{marginLeft: "30px", width: '10%'}}/> 
             </div>
 
             <div className="bodyArea" style={{display: "flex", flexDirection: "row", height: "93%", flexGrow: 1}}>
                 <div style={{display: "flex", flexDirection: "column", width:"13%", textAlign:"center", padding: "5px"}}>
                     
-                    <div className="totalReportMenu">
+                    {/* <div className="totalReportMenu">
                         <div style={menuTitle} > 
                             리포트
                         </div>
@@ -89,7 +89,7 @@ const Analysis = ({keywordMenuList}) => {
                             }
                         </ListGroup>
 
-                    </div>
+                    </div> */}
 
                     <div className="coalitionMenu">
                         <div style={menuTitle}>
