@@ -16,7 +16,7 @@ import WebLogo from "../images/web_logo.png";
 
 const Analysis = ({keywordMenuList}) => {
 
-    const [menu, setMenu] = useState(null);
+    const [menu, setMenu] = useState('컨텍 현황');
     
     const selectMenu = (e) => {
       setMenu(e);
