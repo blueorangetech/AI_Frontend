@@ -1,0 +1,5 @@
+.logo:hover{
+    transform: scale(1.05); /* 확대 효과 */
+    transition: transform 0.2s; /* 전환 효과 */
+    opacity: 0.8;
+}

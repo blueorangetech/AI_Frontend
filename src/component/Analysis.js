@@ -1,22 +1,49 @@
 import { Image, ListGroup } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
+import axios from "axios";
 
 import Reports from "./Reports";
 import DashBoard from "./DashBoard";
 import TableView from "./TableView";
+import Header from "./Header";
 
 import 'rsuite/dist/rsuite.min.css';
 import '../css/Analysis.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import TotalReport from "../images/menu_totalReport.png"; 
-import MediaReport from "../images/menu_media.png"; 
+const endPoint = process.env.REACT_APP_API_ENDPOINT;
 
-import WebLogo from "../images/web_logo.png";
+const Analysis = ({customer}) => {
+    const navi = useNavigate();
+    const cookie = new Cookies();
+    const token = cookie.get("token", {"path": "/"});
+    const tokenCheck = useRef(false);
+    const locationInfo = useLocation();
+    
+    useEffect(() => {
+      const CheckAuth = async() => {
+        try{
+          const headers = {"Authorization" : token}
+          await axios.get(`${endPoint}/auth${locationInfo.pathname}`, { headers });
+  
+        } catch(error){
+          alert(error.response.data.detail);
+          navi('/');
+        }
+      }
 
-const Analysis = ({keywordMenuList}) => {
+      if (token === undefined && !tokenCheck.current) {
+        alert("로그인이 필요한 접근입니다");
+        tokenCheck.current = true;
+        navi("/");  
+      } 
 
-    const [menu, setMenu] = useState('컨택 현황');
+      CheckAuth();
+    }, [navi, token, locationInfo.pathname]);
+
+    const [menu, setMenu] = useState('');
     
     const selectMenu = (e) => {
       setMenu(e);
@@ -40,86 +67,42 @@ const Analysis = ({keywordMenuList}) => {
     };
 
     return (
-        <div className="mainArea" style={{display : "flex", flexDirection: "column", height: "100vh"}}>
+      <div className="mainArea" style={{display : "flex", flexDirection: "column", height: "100vh"}}>
 
-            <div className="logoArea" style={{display: "flex", alignItems:"center", backgroundColor: "#5986ED", height: "7%"}}>
-                <Image src={WebLogo} style={{marginLeft: "30px", width: '10%'}}/> 
-            </div>
+        <Header />
 
-            <div className="bodyArea" style={{display: "flex", flexDirection: "row", height: "93%", flexGrow: 1}}>
-                <div style={{display: "flex", flexDirection: "column", width:"13%", textAlign:"center", padding: "5px"}}>
-                    
-                    {/* <div className="totalReportMenu">
-                        <div style={menuTitle} > 
-                            리포트
-                        </div>
+        <div className="bodyArea" style={{display: "flex", flexDirection: "row", height: "93%", flexGrow: 1}}>
+          <div style={{display: "flex", flexDirection: "column", width:"13%", textAlign:"center", padding: "5px"}}>
+              
+            { Object.keys(customer.menu).map((fieldName, index) => {
+              return (
+                <div key={index}>
+                  <div style={menuTitle} > 
+                      {fieldName}
+                  </div>
 
-                        <ListGroup>
-                            { ["통합 리포트", "매체별 리포트"].map((item, index) => {
-                                return (
-                                    <ListGroup.Item key={index} onClick={() => selectMenu(item)} 
-                                        style={menu === item ? selecetedStyle : notSelecetedStyle}>
-                                        <Image src= {item === "통합 리포트" ? TotalReport : MediaReport} style={{marginRight: "20px", objectFit: "contain"}}/>
-                                        
-                                        {item}
-                                    </ListGroup.Item>
-                                    );
-                                })
-                            }
-                        </ListGroup>
-                    </div>
-                    
-                    <div className="keywordReportMenu">
-                        <div style={menuTitle}> 
-                            키워드 리포트
-                        </div>
-
-                        <ListGroup>
-                            { Object.entries(keywordMenuList).map(([item, value], index) => {
-                                return (
-                                    <ListGroup.Item key={index} onClick={() => selectMenu(item)}
-                                        style={menu === item ? selecetedStyle : notSelecetedStyle}> 
-                                        
-                                        <Image src={value} style={{marginRight: "20px", objectFit: "contain"}}/>
-                                        {item}
-                                        
-                                    </ListGroup.Item>
-                                    );
-                                })
-                            }
-                        </ListGroup>
-
-                    </div> */}
-
-                    <div className="coalitionMenu">
-                        <div style={menuTitle}>
-                            제휴
-
-                        </div>
-                         <ListGroup>
-                            { ["컨택 현황", "성과 대시보드"].map((item, index) => {
-                                return (
-                                    <ListGroup.Item key={index} onClick={() => selectMenu(item)} 
-                                        style={menu === item ? selecetedStyle : notSelecetedStyle}>
-                                        <Image src= {item === "통합 리포트" ? TotalReport : MediaReport} style={{marginRight: "20px", objectFit: "contain"}}/>
-                                        
-                                        {item}
-                                    </ListGroup.Item>
-                                    );
-                                })
-                            }
-                        </ListGroup>
-                    </div>
-
-                </div>
-                {
-                  menu === '컨택 현황' ? <TableView/> : menu === '성과 대시보드' ? <DashBoard/> : <Reports menu={menu} setMenu={setMenu}/>
-                }
-                
-            </div>
-
+                  <ListGroup>
+                    { Object.entries(customer.menu[fieldName]).map(([item, value], index) => {
+                      return (
+                        <ListGroup.Item key={index} onClick={() => selectMenu(item)} 
+                          style={menu === item ? selecetedStyle : notSelecetedStyle}>
+                          <Image src= {value} style={{marginRight: "20px", objectFit: "contain"}}/>
+                          {item}
+                        </ListGroup.Item>
+                        );
+                      })
+                    }
+                  </ListGroup>
+                </div>)
+              })
+            }
+          </div>
+          {
+            menu === '컨택 현황' ? <TableView/> : menu === '성과 대시보드' ? <DashBoard/> : <Reports menu={menu} setMenu={setMenu} customer={customer}/>
+          }
+          
         </div>
-
+      </div>
     )
 }
 

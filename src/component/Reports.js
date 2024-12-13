@@ -8,7 +8,7 @@ import FormattingText from "./FormattingText";
 
 const endPoint = process.env.REACT_APP_API_ENDPOINT;
 
-const Reports = ({menu, setMenu}) => {
+const Reports = ({menu, setMenu, customer}) => {
   const today = new Date();
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(today.getDate() - 7);
@@ -103,8 +103,11 @@ const Reports = ({menu, setMenu}) => {
       if (file){
         const formData = new FormData();
         file && formData.append("file", file);
+
         formData.append("standard", JSON.stringify(standardDates));
         formData.append("compare", JSON.stringify(compareDates));
+        formData.append("formula", JSON.stringify(customer.formula));
+        formData.append("depth", JSON.stringify(customer.depth));
 
         const response = await axios.post(`${endPoint}/analysis/report`, formData);
         setResults((prevResults) => ({...prevResults, ...response.data}));
@@ -113,8 +116,11 @@ const Reports = ({menu, setMenu}) => {
       if (keywordFile){
         const keywordFormData = new FormData();
         keywordFile && keywordFormData.append("file", keywordFile);
+
         keywordFormData.append("standard", JSON.stringify(standardDates));
         keywordFormData.append("compare", JSON.stringify(compareDates));
+        keywordFormData.append("keyword_formula", JSON.stringify(customer.keywordFormula));
+        keywordFormData.append("depth", JSON.stringify(customer.depth));
 
         const keywordResponse = await axios.post(`${endPoint}/analysis/keyword`, keywordFormData);
         
@@ -125,7 +131,7 @@ const Reports = ({menu, setMenu}) => {
       
     } catch (e) {
       setOnProcess(false);
-      alert(e.response.detail);
+      alert(e.response.data.detail);
     }
   };
 
@@ -182,11 +188,10 @@ const Reports = ({menu, setMenu}) => {
         </div>
 
         <div style={{marginBottom: "30px", marginRight: "30px", marginLeft: "30px", padding: "30px",
-            backgroundColor: "white",  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)", flexGrow: 1, maxHeight: "65vh", maxWidth: "90vw"}}>
+            backgroundColor: "white",  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.5)", flexGrow: 1, maxHeight: "75vh", maxWidth: "90vw"}}>
 
             <FormattingText allResult={results} menu={menu} onProcess={onProcess}/>
         </div>
-
     </div>
 
   )

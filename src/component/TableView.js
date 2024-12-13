@@ -9,7 +9,11 @@ const TableView = () => {
   const status = ['전체', '계약완료', '컨펌대기', '협의중', '미팅진행', '미팅확보', '컨택중'];
   const [selectStatus, setSelectStatus] = useState('전체');
   const [searchText, setSearchText] = useState('');
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState(
+    data.header.reduce((acc, curr) => {
+    acc[curr] = '';
+    return acc
+  }, {}));
 
   const statusColors = {
     "계약완료": "#006400", // 어두운 녹색
@@ -43,7 +47,7 @@ const TableView = () => {
 
     setFormData(initData());
 
-  }, [selectStatus]);
+  }, [selectStatus, initData]);
 
   const SubmitData = (event) => {
     event.preventDefault();
@@ -97,8 +101,8 @@ const TableView = () => {
       <div style={{display: 'flex', marginBottom: 10}}>
 
         <DropdownButton onSelect={StatusFilter} title={selectStatus}>
-          {status.map((item) => (
-            <Dropdown.Item eventKey={item}> {item} </Dropdown.Item>
+          {status.map((item, index) => (
+            <Dropdown.Item key={index} eventKey={item}> {item} </Dropdown.Item>
             )
           )}
         </DropdownButton>
@@ -113,11 +117,13 @@ const TableView = () => {
       <div style={{ overflow: 'auto'}}>
 
         <Table bordered style={{ textAlign: 'center', verticalAlign: 'middle', tableLayout: "fixed"}}>
-          <thead style={{verticalAlign: 'middle', backgroundColor: "#5986ED", color: 'white', height: 40}}>
-            {data.header.map((item, index) => (
-              <th key={index}> {item} </th>
-            ))}
-            <th> </th>
+          <thead style={{verticalAlign: 'middle', backgroundColor: "#5986ED", color: 'white', height: 40, fontSize: 14}}>
+            <tr>
+              {data.header.map((item, index) => (
+                <th key={index}> {item} </th>
+              ))}
+              <th> </th>
+            </tr>
           </thead>
 
           <tbody style={{fontSize: 12}}>
