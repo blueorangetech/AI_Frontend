@@ -3,12 +3,14 @@ import { Image } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
+import '../css/LoginModal.css';
 
 const endPoint = process.env.REACT_APP_API_ENDPOINT;
 
 const LoginModal = ({customerInfo}) => {
   const cookie = new Cookies();
   const navi = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
 
   const InputPassword = (event) => {
@@ -17,6 +19,8 @@ const LoginModal = ({customerInfo}) => {
 
   const AccessCheck = async() => {
     try {
+      setLoading(true);
+
       const body = {name: customerInfo.name, password: password };
       const response = await axios.post(`${endPoint}/auth${customerInfo.url}`, body);
 
@@ -25,6 +29,9 @@ const LoginModal = ({customerInfo}) => {
 
     } catch(error) {
       alert(error.response.data.detail);
+
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -38,14 +45,24 @@ const LoginModal = ({customerInfo}) => {
       <div style={{textAlign: "center"}}>
         <Image src= {customerInfo.logo} style={{width: "80%", objectFit: "contain"}}/>
       </div>
-
-      <input type="password" value={password} onChange={InputPassword}
-        style={{width: "50%", marginBottom: "30px", borderRadius: 10}}/>
-      <button onClick={AccessCheck}
-        style={{width: "40%", height: "50px", fontSize: 18,
-        backgroundColor: "#4373E2", color: "white"}}>
-        로그인
-      </button>
+      {
+        loading ? 
+        <>
+          <div className="loadingSpinner"></div>
+          <span> 로그인 중 </span>
+        </>
+        :(
+          <>
+            <input type="password" value={password} onChange={InputPassword}
+              style={{width: "50%", marginBottom: "30px", border: "2px solid gray", borderRadius: 5, outline: "none"}}/>
+            <button onClick={AccessCheck}
+              style={{width: "40%", height: "50px", fontSize: 18,
+              backgroundColor: "#4373E2", color: "white"}}>
+              로그인
+            </button>
+          </>
+        )
+      }
     </div>
   )
 };

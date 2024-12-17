@@ -6,32 +6,10 @@ import ClickImage from "../images/icons/icon_05.png";
 import ImpImage from "../images/icons/icon_06.png";
 
 import KBCI from "../images/customers/kbinsure.jpg";
-import CarrotCI from '../images/customers/carrot.jpg';
 import LinaCI from "../images/customers/lina.png";
 import AptiCI from "../images/customers/apti.png";
 
 const allCustomers = {
-  carrot: {
-    name: 'carrot',
-    logo: CarrotCI,
-    url : '/carrot',
-    menu : {
-      "리포트": {
-        "통합 리포트" : TotalReport, 
-        "매체별 리포트": MediaReport
-      },
-      
-      "키워드 리포트": {
-        "청약": GoalImage, 
-        "CPA": GoalImage, 
-        "설계": GoalImage, 
-        "광고비": CostIamge,
-        "CPS": CostIamge,
-        "유입": ClickImage,
-      }
-    },
-  },
-
   kbinsure: {
     name: 'kbinsure',
     logo: KBCI,
@@ -79,7 +57,7 @@ const allCustomers = {
     formula: [
       "노출수", "클릭수", "비용", 
       ["CTR", "클릭수", "노출수", 100],
-      ["CPC", "비용", "클릭수", 100 ],
+      ["CPC", "비용", "클릭수", 1],
       "최종 DB",
       ["배정CVR", "최종 DB", "클릭수", 100],
       ["배정CPA", "비용", "최종 DB", 1],
