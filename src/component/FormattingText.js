@@ -7,7 +7,6 @@ import NoResult from "../images/p_error.png";
 
 const FormattingText = ({ allResult, menu, onProcess }) => {
     // 분석 완료 & 데이터 존재
-    const keyCounts = Object.keys(allResult).length;
     const result = allResult[menu];
     
     const [counter, setCounter] = useState(1);
@@ -25,7 +24,7 @@ const FormattingText = ({ allResult, menu, onProcess }) => {
       }
     }, [onProcess]);
 
-    if (keyCounts === 0 && onProcess === false) {
+    if (result === undefined && onProcess === false) {
       return (
         <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
             <Image src={MainImage} style={{height: "90%"}}/>

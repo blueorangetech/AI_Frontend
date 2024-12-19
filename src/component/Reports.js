@@ -8,7 +8,7 @@ import FormattingText from "./FormattingText";
 
 const endPoint = process.env.REACT_APP_API_ENDPOINT;
 
-const Reports = ({menu, setMenu, customer}) => {
+const Reports = ({menu, setMenu, customer, token}) => {
   const today = new Date();
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(today.getDate() - 7);
@@ -88,6 +88,16 @@ const Reports = ({menu, setMenu, customer}) => {
   }
   
   useEffect(() => {
+    const GetCachedData = async() => {
+      const headers = {"Authorization" : token}
+      const cachedData = await axios.get(`${endPoint}/analysis/cached`, { headers });
+      setResults(cachedData.data);
+    }
+
+    GetCachedData();
+  }, [token])
+
+  useEffect(() => {
     if (results && Object.keys(results).length > 0) {
       const sampleKey = Object.keys(results)[0];
       setMenu(sampleKey);
@@ -99,6 +109,7 @@ const Reports = ({menu, setMenu, customer}) => {
     try{
       setOnProcess(true);
       setResults({}); // 재 분석 시 결과 초기화
+      const headers = {"Authorization" : token}
 
       if (file){
         const formData = new FormData();
@@ -109,7 +120,7 @@ const Reports = ({menu, setMenu, customer}) => {
         formData.append("formula", JSON.stringify(customer.formula));
         formData.append("depth", JSON.stringify(customer.depth));
 
-        const response = await axios.post(`${endPoint}/analysis/report`, formData);
+        const response = await axios.post(`${endPoint}/analysis/report`, formData, { headers });
         setResults((prevResults) => ({...prevResults, ...response.data}));
       };
 
@@ -122,7 +133,7 @@ const Reports = ({menu, setMenu, customer}) => {
         keywordFormData.append("keyword_formula", JSON.stringify(customer.keywordFormula));
         keywordFormData.append("depth", JSON.stringify(customer.depth));
 
-        const keywordResponse = await axios.post(`${endPoint}/analysis/keyword`, keywordFormData);
+        const keywordResponse = await axios.post(`${endPoint}/analysis/keyword`, keywordFormData, { headers });
         
         setResults((prevResults) => ({...prevResults, ...keywordResponse.data}));
       };

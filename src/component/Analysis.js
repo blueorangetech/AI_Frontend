@@ -98,7 +98,8 @@ const Analysis = ({customer}) => {
             }
           </div>
           {
-            menu === '컨택 현황' ? <TableView/> : menu === '성과 대시보드' ? <DashBoard/> : <Reports menu={menu} setMenu={setMenu} customer={customer}/>
+            menu === '컨택 현황' ? <TableView/> : menu === '성과 대시보드' ? <DashBoard/> : 
+            <Reports menu={menu} setMenu={setMenu} customer={customer} token={token}/>
           }
           
         </div>
